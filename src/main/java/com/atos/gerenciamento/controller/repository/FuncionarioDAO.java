@@ -19,38 +19,62 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class FuncionarioDAO {
-    
-    public List<FuncionarioBean> lerTodos(){
+
+    public List<FuncionarioBean> lerTodos() {
         List<FuncionarioBean> dados = new ArrayList();
-            try {
-                Connection conn = Conexao.conectar();
-                PreparedStatement stmt = null;
-                ResultSet rs = null;
-                
-                stmt = conn.prepareStatement("SELECT * FROM funcionario");
-                rs = stmt.executeQuery();
-                
-                while (rs.next()) {
-                    FuncionarioBean funcionario = new FuncionarioBean ();
-                    funcionario.setId(rs.getInt("id"));
-                    funcionario.setNome(rs.getString("nome"));
-                    funcionario.setCargo(rs.getString("Cargo"));
-                    funcionario.setDepartamento(rs.getString("departamento"));
-                    funcionario.setEmail(rs.getString("email"));
-                    funcionario.setData_contratacao(rs.getDate("data_contratacao"));
-                    
-                    dados.add(funcionario);
-                    
-                }
-                        
-            } catch(SQLException e){
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+
+            stmt = conn.prepareStatement("SELECT * FROM funcionario");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                FuncionarioBean funcionario = new FuncionarioBean();
+                funcionario.setId(rs.getInt("id"));
+                funcionario.setNome(rs.getString("nome"));
+                funcionario.setCargo(rs.getString("Cargo"));
+                funcionario.setDepartamento(rs.getString("departamento"));
+                funcionario.setEmail(rs.getString("email"));
+                funcionario.setData_contratacao(rs.getDate("data_contratacao"));
+
+                dados.add(funcionario);
+
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
-        } 
-            return dados;
-        
+        }
+        return dados;
+
     }
 
-    public List<FuncionarioBean> letTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public FuncionarioBean lerId(int id) {
+        FuncionarioBean funcionario = new FuncionarioBean();
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+
+            stmt = conn.prepareStatement("SELECT * FROM funcionario WHERE id = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                funcionario.setId(rs.getInt("id"));
+                funcionario.setNome(rs.getString("nome"));
+                funcionario.setCargo(rs.getString("Cargo"));
+                funcionario.setDepartamento(rs.getString("departamento"));
+                funcionario.setEmail(rs.getString("email"));
+                funcionario.setData_contratacao(rs.getDate("data_contratacao"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return funcionario;
     }
+
 }

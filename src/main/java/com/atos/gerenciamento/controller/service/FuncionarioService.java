@@ -16,12 +16,21 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FuncionarioService {
-    
+
     @Autowired
     private FuncionarioDAO repository;
+
+    public List<FuncionarioBean> lerTodos() {
+        return repository.lerTodos();
+
+    }
     
-    public List<FuncionarioBean> lerTodos (){
-    return repository.letTodos();
-}
+    public FuncionarioBean lerId(int id){
+        return repository.lerId(id);
+        
+    }
     
+    
+            
+            
 }
