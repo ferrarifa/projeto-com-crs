@@ -6,6 +6,7 @@ package com.atos.gerenciamento.controller.service;
 
 import com.atos.gerenciamento.controller.model.FuncionarioBean;
 import com.atos.gerenciamento.controller.repository.FuncionarioDAO;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class FuncionarioService {
         
     }
     
+    public void editarFunc(FuncionarioBean funcionario){
+        repository.editarFunc(funcionario);
+    }
     
             
             

@@ -4,15 +4,17 @@
  */
 package com.atos.gerenciamento.controller;
 
-
 import com.atos.gerenciamento.controller.model.FuncionarioBean;
 import com.atos.gerenciamento.controller.repository.FuncionarioDAO;
 import com.atos.gerenciamento.controller.service.FuncionarioService;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -21,24 +23,28 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class FuncionarioController {
-    
+
     @Autowired
     private FuncionarioService service;
-    
-    
+
     @GetMapping("/funcionarios")
-    public String getFuncionarios(Model model){
+    public String getFuncionarios(Model model) {
         List<FuncionarioBean> lista = service.lerTodos();
         model.addAttribute("lista", lista);
         return "funcionarios";
     }
-    
-    
+
     @GetMapping("/perfil")
-    public String perfil (@RequestParam int id, Model model){
+    public String perfil(@RequestParam int id, Model model) {
         FuncionarioBean funcionario = service.lerId(id);
         model.addAttribute("funcionario", funcionario);
         return "perfil";
     }
-    
+
+    @PostMapping("/salvar")
+    public String salvarDados(@ModelAttribute FuncionarioBean funcionario) {
+        service.editarFunc(funcionario);
+        return "redirect:/funcionarios";
+    }
+
 }

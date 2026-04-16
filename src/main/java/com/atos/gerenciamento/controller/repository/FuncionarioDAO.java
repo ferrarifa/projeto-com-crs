@@ -6,6 +6,7 @@ package com.atos.gerenciamento.controller.repository;
 
 import com.atos.gerenciamento.controller.model.FuncionarioBean;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,6 +76,26 @@ public class FuncionarioDAO {
         }
 
         return funcionario;
+    }
+
+    public void editarFunc(FuncionarioBean funcionario) {
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = null;
+
+            stmt = conn.prepareStatement("UPDATE funcionario SET nome=?, cargo=?, departamento=?, email=?, data_contratacao=? WHERE id=?");
+            stmt.setString(1, funcionario.getNome());
+            stmt.setString(2, funcionario.getCargo());
+            stmt.setString(3, funcionario.getDepartamento());
+            stmt.setString(4, funcionario.getEmail());
+            stmt.setDate(5, funcionario.getData_contratacao());
+            stmt.setInt(6, funcionario.getId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
